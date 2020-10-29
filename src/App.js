@@ -1,9 +1,14 @@
 import React from 'react';
-
+import {Switch, Route} from 'react-router-dom'
 function App() {
+  const Login = () =>(
+      <h2>Login </h2>
+  )
   return (
     <div className="App">
-      <h2>hola</h2>
+      <Switch>
+          <Route path={`/`} component={Login}/>
+      </Switch>
     </div>
   );
 }
