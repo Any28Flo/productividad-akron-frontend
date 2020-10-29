@@ -1,12 +1,17 @@
-import React, {useState} from 'react';
-import {Container, Row, Col, Card, Form, FormGroup, FormText, Input, Button, CardBody, Label,CardFooter} from 'reactstrap';
+import React, {useState, useCallback} from 'react';
+import {Container, Row, Col, Card, Form, FormGroup, FormText, Input, Button, CardBody, Label,CardFooter, Spinner} from 'reactstrap';
 import {Link} from 'react-router-dom';
-
+import {useDispatch, useSelector} from 'react-redux'
 const Login = () =>{
+    const {loading} = useSelector(state => state.user)
+    const dispatch = useDispatch;
     const [formState, setFormState] = useState({
         usuario: '',
         contrasena: '',
     });
+    const sendForm = useCallback(()=>{
+
+    }, [dispatch]);
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -14,14 +19,13 @@ const Login = () =>{
     };
     const handleFormSubmit = e =>{
         e.preventDefault();
-        console.log("hola")
     }
     return(
-        <Container fluid className='text-center h-100'>
+        <Container fluid className='text-center h-100 mt-5'>
             <Row>
                 <Col sm='9' md='7' lg='5' className='mx-auto mt-50'>
                     {loading ? (
-                        <Spiner />
+                        <Spinner />
                     ) : (
                         <Card className='login-form'>
                             <CardBody>
