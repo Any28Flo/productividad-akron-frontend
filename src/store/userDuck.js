@@ -1,15 +1,23 @@
-const initState ={
-    isLoged : false,
-    loading:false,
-}
 
 const LOGIN_START = 'LOGIN_START';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_ERROR = 'LOGIN_ERROR';
 
 
-export default function userReducer (state=initState, {type,payload}){
+const initState ={
+    isLoged : false,
+    loading:false,
+    message: null,
+}
+
+export default function userReducer(state = initState, { type, payload }) {
     switch (type) {
+        case LOGIN_START:
+            return {...state, loading: true}
+        case LOGIN_SUCCESS :
+            return {...state, loading: false, ...payload, isLoged: true }
+        case LOGIN_ERROR:
+            return {...state, loading: false}
         default:
             return state;
     }
@@ -18,19 +26,22 @@ export default function userReducer (state=initState, {type,payload}){
 const loginStart = () =>({
     type: LOGIN_START
 })
-const loginSuccess = () =>({
-    type: LOGIN_SUCCESS
+const loginSuccess = (payload) =>({
+    type: LOGIN_SUCCESS,
+    payload
 })
 const loginError = () =>({
     type: LOGIN_ERROR
 })
 
-const loginAction = ({user,password}) => async(dispatch, useState, {axios}) =>{
+export const loginAction = ({userName,password}) =>async (dispatch, getState, {axios}) =>{
     dispatch(loginStart())
     try{
-        const {resultado}= axios.put('/login', {user,password})
-        dispatch(loginSuccess())
-    }catch(e){
+        const {data: {msg, savedUser}} =  await  axios.post('/user/register', {userName,password})
+         dispatch(loginSuccess(savedUser))
+    }catch (e) {
         dispatch(loginError())
+        throw e;
     }
+
 }

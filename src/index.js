@@ -8,6 +8,7 @@ import rootReducer from './store/rootReducer';
 import { BrowserRouter as Router} from 'react-router-dom';
 import * as services from './services';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import reportWebVitals from './reportWebVitals';
 
 const store = createStore(
   rootReducer,
@@ -16,17 +17,15 @@ const store = createStore(
     window.devToolsExtension ? window.devToolsExtension() : (f) => f
   )
 );
-
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-        <App />
+      <App />
     </Router>
-  </Provider>
-
-  ,document.getElementById('root')
+  </Provider>,
+  document.getElementById('root')
 );
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
