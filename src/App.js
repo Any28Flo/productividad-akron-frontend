@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom'
 import Login from './components/LogIn/LogIn';
 import RegisterUser from "./components/RegisterUser/RegisterUser";
-import ProtectedRoutes from "./components/routes/ProtectedRoutes";
+import ProtectedRoutes from "./components/routes/ProtectedRoutes/ProtectedRoutes";
 import Dashboard from "./components/Dashboard";
 function App() {
 
