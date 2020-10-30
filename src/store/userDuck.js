@@ -5,7 +5,7 @@ const LOGIN_ERROR = 'LOGIN_ERROR';
 
 
 const initState ={
-    isLoged : false,
+    isLogged : false,
     loading:false,
     message: null,
 }
@@ -15,7 +15,7 @@ export default function userReducer(state = initState, { type, payload }) {
         case LOGIN_START:
             return {...state, loading: true}
         case LOGIN_SUCCESS :
-            return {...state, loading: false, ...payload, isLoged: true }
+            return {...state, loading: false, ...payload, isLogged: true }
         case LOGIN_ERROR:
             return {...state, loading: false}
         default:

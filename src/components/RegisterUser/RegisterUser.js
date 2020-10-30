@@ -1,11 +1,12 @@
 import React, {useCallback, useState} from 'react';
 import {Button, Card, CardBody, CardFooter, Col, Container, Form, FormGroup, FormText, Input, Label, Row, Spinner} from "reactstrap";
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {loginAction} from '../../store/userDuck';
 
 const RegisterUser = () =>{
     const dispatch = useDispatch();
+    const history = useHistory();
     const {loading} = useSelector(state => state.user)
 
     const [formState, setFormState] = useState({
@@ -16,7 +17,7 @@ const RegisterUser = () =>{
     const userRegister = useCallback( async(formState) =>{
         try {
             await dispatch( loginAction(formState))
-
+            history.push('/dashboard')
         }catch (e) {}
     }, [dispatch])
 
