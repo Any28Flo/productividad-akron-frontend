@@ -1,10 +1,13 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import Task from "../../pages/Task/Task";
+import TaskPage from "../../pages/Task/TaskPage";
+import ChartPage from "../../pages/Chart/ChartPage";
 const DashboardRoutes = ({path}) =>{
     return(
         <>
-            <Route  path={`${path}/tasks`} component={Task}/>
+            <Route  path={`${path}/tasks`} component={TaskPage}/>
+            <Route  path={`${path}/chart`} component={ChartPage}/>
+
         </>
     )
 }
