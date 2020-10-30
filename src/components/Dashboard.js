@@ -1,8 +1,19 @@
 import React from 'react';
-
-const Dashboard = () =>{
+import {Container, Row, Col} from 'reactstrap';
+import Navbar from './layout/Navbar';
+import routes from './routes/routes'
+const Dashboard = (props) =>{
     return(
-        <h2>Dashboard</h2>
+        <Container fluid>
+            <Row>
+                <Col lg={3}>
+                    <Navbar {...props}  routes={routes}/>
+                </Col>
+                <Col lg={9}>
+
+                </Col>
+            </Row>
+        </Container>
     )
 }
 export default Dashboard

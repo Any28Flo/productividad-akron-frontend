@@ -5,7 +5,7 @@ const LOGIN_ERROR = 'LOGIN_ERROR';
 
 
 const initState ={
-    isLogged : false,
+    isLogged : true,
     loading:false,
     message: null,
 }
