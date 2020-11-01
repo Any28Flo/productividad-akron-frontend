@@ -1,11 +1,9 @@
 import React, {useCallback, useEffect} from 'react';
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector, useDispatch} from 'react-redux';
 import {Route, Redirect} from 'react-router-dom';
 
 const ProtectedRoutes = ({component: Component, auth, ...rest}) =>{
     const {isLogged} = useSelector(state => state.user);
-    const dispatch = useDispatch();
-
 
     return(
         <Route
@@ -14,7 +12,6 @@ const ProtectedRoutes = ({component: Component, auth, ...rest}) =>{
                 isLogged ? <Component {...props} /> : <Redirect to='/' />
             }
         />
-
     )
 }
 export default ProtectedRoutes;

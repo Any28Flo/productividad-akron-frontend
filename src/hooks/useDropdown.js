@@ -2,7 +2,6 @@ import  React, {useState} from "react"
 
 const useDropdown = (label, defaultState, options) =>{
     const [state , setState] = useState(defaultState);
-
     const id= `dropdown-${label.replace(" " ,"").toLocaleLowerCase()}`;
     const Dropdown = () =>(
         <label htmlFor={id}>
@@ -16,8 +15,8 @@ const useDropdown = (label, defaultState, options) =>{
             >
                 <option>All</option>
                 {
-                    options.map( option =>(
-                        <option key={option} value={option.value}>
+                    options.map( (option, index )=>(
+                        <option key={index} value={option.value}>
                             {option.label}
                         </option>
 
