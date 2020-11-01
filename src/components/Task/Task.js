@@ -5,7 +5,7 @@ const Task = ({status,name,icon}) =>{
         <tr>
             <td>{status}</td>
             <td>{name}</td>
-            <td>{icon}</td>
+            <td>'Delete'</td>
         </tr>
     )
 }

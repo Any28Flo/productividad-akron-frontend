@@ -1,11 +1,13 @@
 import React , {useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { Table } from 'reactstrap';
-import {fetchTasksAction} from "../../store/taskDuck";
+import {Spinner} from 'reactstrap';
 
+import {fetchTasksAction} from "../../store/taskDuck";
+import Task from "./Task";
 const Tasks = () =>{
     const dispatch= useDispatch();
-   const {loading,listTaks} = useSelector(state => state.task);
+   const {loading,listTask} = useSelector(state => state.task);
 
     const fetchTask = useCallback(async()=>{
         try{
@@ -17,8 +19,8 @@ const Tasks = () =>{
         fetchTask()
     }, [dispatch])
 
-    if (!listTaks|| listTaks.length === 0) return <h2>Sin tareas aún registradas </h2>
-
+    if (!listTask|| listTask.length === 0) return <h2>Sin tareas aún registradas </h2>
+    if(loading) return <Spinner/>
     return(
         <Table striped>
             <thead>
@@ -34,12 +36,9 @@ const Tasks = () =>{
                 <td>Task 1</td>
                 <td>IconTrash</td>
             </tr>
-            <tr>
-                <td>Pending</td>
-                <td>Task 1</td>
-                <td>IconTrash</td>
-            </tr>
-
+            {
+                listTask.map(task => <Task task={task}  />)
+            }
             </tbody>
         </Table>
     )

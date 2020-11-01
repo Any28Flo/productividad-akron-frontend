@@ -60,9 +60,8 @@ export const fetchTasksAction = () => async(dispatch, getState, {axios})=>{
     const {_id}= getState().user;
     try{
         const {data:{tasks}} = await axios.get('/task',{headers: { user: _id}})
-        dispatch(tasksSucces({tasks}))
+        dispatch(tasksSucces(tasks))
     }catch(e){
-        console.log(e)
         dispatch(tasksError(e))
     }
 }
