@@ -1,9 +1,24 @@
-import React from 'react';
-import {useDispatch, useState} from 'react-redux';
+import React , {useEffect, useCallback} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import { Table } from 'reactstrap';
+import {fetchTasksAction} from "../../store/taskDuck";
 
 const Tasks = () =>{
-  //  const {loading,task} = useState(state => state.task)
+    const dispatch= useDispatch();
+   const {loading,listTaks} = useSelector(state => state.task);
+
+    const fetchTask = useCallback(async()=>{
+        try{
+            await dispatch(fetchTasksAction())
+        }catch (e) {}
+    },[dispatch])
+
+    useEffect(() =>{
+        fetchTask()
+    }, [dispatch])
+
+    if (!listTaks|| listTaks.length === 0) return <h2>Sin tareas aún registradas </h2>
+
     return(
         <Table striped>
             <thead>

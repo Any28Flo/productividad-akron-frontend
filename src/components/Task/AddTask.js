@@ -11,7 +11,7 @@ const AddTask = () =>{
     const dispatch= useDispatch();
     const history = useHistory();
     const {loading, error, msg} = useSelector(state => state.task);
-
+    const {_id} = useSelector(state => state.user);
     const [duration, DurationDropdown] = useDropdown("duration", '', durationOptions)
     const [newTask, setNewTask]=useState({
         taskName:'',
