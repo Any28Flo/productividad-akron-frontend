@@ -31,11 +31,6 @@ const Tasks = () =>{
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Pending</td>
-                <td>Task 1</td>
-                <td>IconTrash</td>
-            </tr>
             {
                 listTask.map(task => <Task task={task}  />)
             }
