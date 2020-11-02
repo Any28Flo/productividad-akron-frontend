@@ -2,7 +2,8 @@ const initState ={
     loading: false,
     listTask:[],
     task:{},
-    edit: false
+    edit: false,
+    msg:null
 
 }
 const  TASK_START ='TASK_START';
@@ -16,6 +17,10 @@ const TASK_DETAIL_SUCCESS = 'TASK_DETAIL_SUCCESS';
 const TASK_DETAIL_ERROR = 'TASK_DETAIL_ERROR';
 
 const EDIT_TASK_BTN = 'EDIT_TASK_BTN';
+
+const EDIT_SUCCES = 'EDIT_SUCCES';
+const EDIT_ERROR = 'EDIT_ERROR';
+
 
 export default function taskReducer(state=initState, {type,payload}){
     switch (type) {
@@ -33,6 +38,8 @@ export default function taskReducer(state=initState, {type,payload}){
             return {...state, loading: false}
         case EDIT_TASK_BTN:
             return {...state, edit: !state.edit}
+        case EDIT_SUCCES:
+            return {...state, msg: payload, loading: false, edit: false}
         default:
             return state;
 
@@ -66,6 +73,13 @@ const detailError = payload =>({
 export const editBtn = () =>({
     type: EDIT_TASK_BTN
 })
+const editSuccess = payload =>({
+    type: EDIT_SUCCES,
+    payload
+})
+const editError = () =>({
+    type: EDIT_ERROR
+})
 export const createTaskAction = ({taskName,description,status, duration}) => async(dispatch, getState, {axios}) =>{
     dispatch(taskStart());
     const {_id}= getState().user;
@@ -94,5 +108,16 @@ export const detailTaskAction = (idTask) => async (dispatch, getState, {axios} )
         dispatch(detailSucces(task))
     }catch (e) {
         dispatch(detailError())
+    }
+}
+export const editTaskAction = (objTask) => async (dispatch, getState, {axios})=>{
+    dispatch(taskStart())
+    const {_id}= getState().task.task;
+
+    try{
+        const {data:{msg}} = await axios.put(`/task/${_id}`, objTask)
+        dispatch(editSuccess(msg))
+    }catch (e) {
+        dispatch(editError())
     }
 }
