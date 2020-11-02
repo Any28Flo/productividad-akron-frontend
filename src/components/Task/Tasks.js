@@ -7,7 +7,7 @@ import {fetchTasksAction} from "../../store/taskDuck";
 import Task from "./Task";
 const Tasks = () =>{
     const dispatch= useDispatch();
-   const {loading,listTask} = useSelector(state => state.task);
+   const {loading,listTask, msg} = useSelector(state => state.task);
 
     const fetchTask = useCallback(async()=>{
         try{
@@ -17,7 +17,7 @@ const Tasks = () =>{
 
     useEffect(() =>{
         fetchTask()
-    }, [dispatch])
+    }, [dispatch, msg])
 
     if (!listTask|| listTask.length === 0) return <h2>Sin tareas aún registradas </h2>
     if(loading) return <Spinner/>

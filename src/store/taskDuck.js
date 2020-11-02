@@ -21,6 +21,9 @@ const EDIT_TASK_BTN = 'EDIT_TASK_BTN';
 const EDIT_SUCCES = 'EDIT_SUCCES';
 const EDIT_ERROR = 'EDIT_ERROR';
 
+const DELETE_SUCCESS = 'DELETE_SUCCESS';
+const DELETE_ERROR = 'DELETE_ERROR';
+
 
 export default function taskReducer(state=initState, {type,payload}){
     switch (type) {
@@ -40,6 +43,11 @@ export default function taskReducer(state=initState, {type,payload}){
             return {...state, edit: !state.edit}
         case EDIT_SUCCES:
             return {...state, msg: payload, loading: false, edit: false}
+        case DELETE_SUCCESS:
+            return {...state, loading: false, msg: payload}
+        case DELETE_ERROR:
+            return {...state, loading: false}
+
         default:
             return state;
 
@@ -80,10 +88,17 @@ const editSuccess = payload =>({
 const editError = () =>({
     type: EDIT_ERROR
 })
+const deleteSuccess = payload =>({
+    type: DELETE_SUCCESS,
+    payload
+})
+const deleteError = payload =>({
+    type: DELETE_ERROR,
+    payload
+})
 export const createTaskAction = ({taskName,description,status, duration}) => async(dispatch, getState, {axios}) =>{
     dispatch(taskStart());
     const {_id}= getState().user;
-
     try{
         const {data:{msg}} = await axios.post('/task', {taskName, description, status, duration, user:_id})
         dispatch(taskSuccess({msg: msg}))
@@ -113,11 +128,21 @@ export const detailTaskAction = (idTask) => async (dispatch, getState, {axios} )
 export const editTaskAction = (objTask) => async (dispatch, getState, {axios})=>{
     dispatch(taskStart())
     const {_id}= getState().task.task;
-
     try{
         const {data:{msg}} = await axios.put(`/task/${_id}`, objTask)
         dispatch(editSuccess(msg))
     }catch (e) {
         dispatch(editError())
+    }
+}
+export const deleteTaskAction = idTask => async(dispatch, getState, {axios}) =>{
+    console.log(idTask);
+    dispatch(taskStart())
+    try {
+        const {data:{msg}} = await axios.put(`/task/deleteTask/${idTask}`)
+        console.log(msg)
+        dispatch(deleteSuccess(msg))
+    }catch (e) {
+        dispatch(deleteError(e))
     }
 }
