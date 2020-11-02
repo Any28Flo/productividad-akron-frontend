@@ -1,11 +1,28 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
+import {faPencilAlt, } from "@fortawesome/free-solid-svg-icons";
 
-const Task = ({status,name,icon}) =>{
+import Button from './../ui/Button';
+const Task = ({task}) =>{
+    const {status,taskName, _id} = task;
+    const history = useHistory()
+    const handleRedirect = () =>{
+        history.push(`/dashboard/task/${_id}`)
+    }
+    const handleDelete = () =>{
+
+    }
+
     return(
         <tr>
-            <td>{status}</td>
-            <td>{name}</td>
-            <td>'Delete'</td>
+           <th>{status}</th>
+           <th>{taskName}</th>
+           <th>
+               <Button clickHandler={handleDelete} icon={faPencilAlt}/>
+            </th>
+            <th>
+                <Button clickHandler={handleRedirect} icon={faPencilAlt}/>
+            </th>
         </tr>
     )
 }

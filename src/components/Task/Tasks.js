@@ -32,7 +32,7 @@ const Tasks = () =>{
             </thead>
             <tbody>
             {
-                listTask.map(task => <Task task={task}  />)
+                listTask.map((task, index) => <Task key={index} task={task}  />)
             }
             </tbody>
         </Table>
