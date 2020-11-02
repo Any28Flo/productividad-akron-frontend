@@ -6,14 +6,16 @@ import {loginAction} from "../../store/userDuck";
 
 const LogIn = () =>{
     const {loading} = useSelector(state => state.user)
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
     const [formState, setFormState] = useState({
-        usuario: '',
-        contrasena: '',
+        userName: '',
+        password: '',
     });
     const sendForm = useCallback(async (formState)=>{
+        console.log(formState);
+
         try {
-           await loginAction(formState)
+           await dispatch(loginAction(formState))
         }catch (e) {
             console.log(e)
         }
@@ -41,9 +43,9 @@ const LogIn = () =>{
                                         <Label>Usuario</Label>
                                         <Input
                                             type='email'
-                                            name='usuario'
+                                            name='userName'
                                             placeholder='Usuario'
-                                            value={formState.usuario}
+                                            value={formState.userName}
                                             onChange={handleChange}
                                             required
                                         />
@@ -56,9 +58,9 @@ const LogIn = () =>{
                                         <Label>Contraseña</Label>
                                         <Input
                                             type='password'
-                                            name='contrasena'
+                                            name='password'
                                             placeholder='Contraseña'
-                                            value={formState.contrasena}
+                                            value={formState.password}
                                             onChange={(e) => handleChange(e)}
                                             required
                                         />

@@ -1,13 +1,13 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {Button, Card, CardBody, CardFooter, Col, Container, Form, FormGroup, FormText, Input, Label, Row, Spinner} from "reactstrap";
 import {Link, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {loginAction} from '../../store/userDuck';
-
+import {registerUserAction} from '../../store/userDuck';
+import SweetAlert from './../ui/SweetAlert'
 const RegisterUser = () =>{
     const dispatch = useDispatch();
     const history = useHistory();
-    const {loading} = useSelector(state => state.user)
+    const {loading, error} = useSelector(state => state.user)
 
     const [formState, setFormState] = useState({
         userName: '',
@@ -16,7 +16,7 @@ const RegisterUser = () =>{
 
     const userRegister = useCallback( async(formState) =>{
         try {
-            await dispatch( loginAction(formState))
+            await dispatch(registerUserAction(formState))
             history.push('/dashboard')
         }catch (e) {}
     }, [dispatch])
@@ -29,6 +29,10 @@ const RegisterUser = () =>{
         e.preventDefault();
         userRegister(formState);
     }
+    useEffect(() => {
+        error && SweetAlert({ icon: 'error', title: 'Error!', text: error });
+    }, [error]);
+
     if(loading) return <Spinner/>
     return(
         <Container fluid className='text-center h-100 mt-5'>

@@ -25,7 +25,7 @@ const AddTask = () =>{
     const createTask= useCallback(async(newTask)=>{
         try {
           await  dispatch(createTaskAction(newTask))
-           await SweetAlert({ icon: 'success', title: 'Exito ', text: msg});
+          await SweetAlert({ icon: 'success', title: 'Exito ', text: msg});
             history.push('/dashboard/tasks')
         }catch(e){
             console.log(e)
@@ -39,6 +39,7 @@ const AddTask = () =>{
     useEffect(() => {
         error && SweetAlert({ icon: 'error', title: 'Error!', text: error });
     }, [error]);
+    
     if(loading) return <Spinner/>
 
     return (
@@ -56,9 +57,7 @@ const AddTask = () =>{
                 <Label for="duration">Duración`</Label>
                 <input type="text" name="duration" id="duration" value={duration}  onChange={handleChange} />
             </FormGroup>
-
             <Button>Submit</Button>
-
         </Form>
     )
 }
