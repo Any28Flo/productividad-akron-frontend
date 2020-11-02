@@ -1,21 +1,22 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {Container, Row, Col, Card, Form, FormGroup, FormText, Input, Button, CardBody, Label,CardFooter, Spinner} from 'reactstrap';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {loginAction} from "../../store/userDuck";
-
+import SweetAlert from './../ui/SweetAlert';
 const LogIn = () =>{
-    const {loading} = useSelector(state => state.user)
+    const history = useHistory();
+    const {loading, error} = useSelector(state => state.user)
     const dispatch = useDispatch();
     const [formState, setFormState] = useState({
         userName: '',
         password: '',
     });
     const sendForm = useCallback(async (formState)=>{
-        console.log(formState);
-
         try {
-           await dispatch(loginAction(formState))
+            await dispatch(loginAction(formState))
+            history.push('/dashboard')
         }catch (e) {
             console.log(e)
         }
@@ -29,6 +30,10 @@ const LogIn = () =>{
         e.preventDefault();
         sendForm(formState)
     }
+    useEffect(() => {
+        error && SweetAlert({ icon: 'error', title: 'Error!', text: error });
+    }, [error]);
+
     return(
         <Container fluid className='text-center h-100 mt-5'>
             <Row>

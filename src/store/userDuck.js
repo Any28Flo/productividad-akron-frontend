@@ -23,7 +23,7 @@ export default function userReducer(state = initState, { type, payload }) {
         case REGISTER_SUCCESS:
             return {...state, loading: false,...payload, isLogged: true}
         case REGISTER_ERROR:
-            return {...state, loading: false, error: payload, isLogged: false}
+            return {...state, loading: false, error: payload}
         default:
             return state;
     }
@@ -51,12 +51,11 @@ const registerError = payload =>({
 export const loginAction = (formState) =>async (dispatch, getState, {axios}) =>{
     dispatch(loginStart())
     try{
-        const {data: {msg, savedUser}} =  await  axios.post('/user/login', formState)
-        dispatch(loginSuccess(savedUser))
+        const {data: {objUser}} =  await  axios.post('/user/login', formState)
+        dispatch(loginSuccess(objUser))
     }catch (e) {
         const { response } = e;
         const { request, ...errorObject } = response;
-        console.log(response)
         const { data } = errorObject;
         dispatch(loginError())
         throw e;
@@ -71,12 +70,8 @@ export const registerUserAction = ({userName, password}) => async(dispatch, getS
     }catch (e) {
         const { response } = e;
         const { request, ...errorObject } = response;
-        console.log(response)
-        console.log(errorObject) 
         const {data:{msg} } = errorObject;
-        console.log(msg)
         dispatch(registerError(msg))
-
         throw e;
 
     }
