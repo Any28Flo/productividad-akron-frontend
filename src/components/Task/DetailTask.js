@@ -7,7 +7,7 @@ import {detailTaskAction, editTaskAction} from "../../store/taskDuck";
 import useDropdown from "../../hooks/useDropdown";
 import durationOptions from "../../constans/duration";
 import SweetAlert from "../ui/SweetAlert";
-
+import ClockArkon from "../ClockArkon/ClockArkon";
 const DetailTask = ({match}) =>{
     const dispatch = useDispatch();
     const {params: { idTask }} = match;
@@ -83,6 +83,8 @@ const DetailTask = ({match}) =>{
                             <Label for="duration">Duración`</Label>
                             <input type="text" name="duration" id="duration" {...disabled}  value={duration} onChange={handleChange} />
                         </FormGroup>
+                        <ClockArkon/>
+
                         {
                             edit ? <Button>Editar</Button> : null
                         }
